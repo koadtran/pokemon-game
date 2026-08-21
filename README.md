@@ -44,6 +44,7 @@ The Pokédex CSVs ship with the repo under `src/files_to_parse/`, so no extra se
 
 ## Project layout
 
+```
 src/
 ├── game.cpp            # main loop, ncurses setup
 ├── world.cpp           # world state, input handling
@@ -58,7 +59,7 @@ src/
 ├── data.h
 ├── files_to_parse/     # Pokédex CSV database
 └── Makefile
-
+```
 
 ## Credits
 
