@@ -1,4 +1,4 @@
-# Pokemon Game
+# pokemon-game
 
 A terminal Pokémon-inspired roguelike written in C++ with ncurses. Wander a huge procedurally-generated world, dodge (or fight) rival trainers driven by Dijkstra pathfinding, and run into wild Pokémon spawned from the real Pokédex database.
 
