@@ -28,14 +28,7 @@ make
 
 Requires a C++ compiler and `libncurses-dev` (or equivalent on your platform).
 
-### Pokédex data
-
-The game looks for the Pokédex CSVs in a few standard locations at startup. If you need a local copy, grab it from the [veekun/pokedex](https://github.com/veekun/pokedex) repo:
-
-```bash
-mkdir -p ~/.poke327
-git clone https://github.com/veekun/pokedex ~/.poke327/pokedex
-```
+The Pokédex CSVs ship with the repo under `src/files_to_parse/`, so no extra setup is needed.
 
 ## Controls
 
