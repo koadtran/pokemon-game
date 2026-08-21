@@ -1,64 +1,52 @@
-# Pokemon game
+# Pokemon Game
 
-A terminal-based Pokémon-inspired roguelike, built incrementally over the semester for **COM S 327 (Advanced Programming Techniques)** at Iowa State University, Spring 2026.
+A terminal Pokémon-inspired roguelike written in C++ with ncurses. Wander a huge procedurally-generated world, dodge (or fight) rival trainers driven by Dijkstra pathfinding, and run into wild Pokémon spawned from the real Pokédex database.
 
-The game generates a 401×401 world of procedurally-generated terrain maps, populates them with trainers driven by Dijkstra-based pathfinding, and lets the player wander, battle, and catch Pokémon loaded from the official Pokédex CSV database.
+## What it does
 
-## Features (by assignment)
+- **Infinite-feeling world.** A 401×401 grid of procedurally-generated terrain maps — grasslands, forests, mountains, water, roads — with gates that align between neighbors so the world stitches together as you explore. Pokémon Centers and Pokémarts thin out the farther you get from the origin.
+- **Smart adversaries.** Six trainer archetypes (Hikers, Rivals, Pacers, Wanderers, Sentries, Explorers), each with their own movement AI. Hikers and Rivals pathfind toward the player using Dijkstra over terrain-specific movement costs.
+- **Priority-queue turn scheduler.** A min-heap keyed on next-move time drives every character; faster movers act more often and time only ticks when something actually happens.
+- **Real Pokémon data.** Loads the full Pokédex CSV database at startup — 1,092 species, their moves, base stats, types, and experience curves.
+- **Wild encounters.** Step into tall grass and a Pokémon spawns with level scaled to your Manhattan distance from the origin, IVs rolled per stat, and a moveset drawn from its actual level-up learnset.
 
-| # | Milestone | Notes |
-|---|-----------|-------|
-| 1.02 | World of maps | 401×401 grid, gates align between neighboring maps, buildings thin out with distance from origin |
-| 1.03 | Pathfinding | Dijkstra's algorithm computes travel-cost maps for hikers and rivals |
-| 1.04 | Trainers | Hikers, Rivals, Pacers, Wanderers, Sentries, Explorers; priority-queue turn scheduler |
-| 1.05 | ncurses UI | Unbuffered input, vi/numpad movement, trainer list with scrolling |
-| 1.06 | Multi-map travel + C++ port | Per-map turn queues, `fly` command, ported from C to C++ with `character` → `pc`/`npc` inheritance |
-| 1.07 | CSV parsing | Loads the Pokédex database (pokemon, moves, species, stats, types, experience, etc.) |
-| 1.08 | Pokémon spawning | Wild encounters in tall grass, level scales with Manhattan distance, IV generation, level-up movesets |
-| 1.09 | Battles | Turn-based battles vs. wild Pokémon and trainers, priority/speed ordering, MSG damage formula |
+## Tech
 
-## Build
+- **Language:** C++ (started in C, ported once the design settled)
+- **UI:** ncurses (unbuffered input, colored terminal rendering)
+- **Data structures:** custom min-heap priority queue, per-map turn queues, 2D terrain grids
+- **Data:** Pokédex CSVs parsed on startup
+
+## Build & run
 
 ```bash
+cd src
 make
-./poke327
+./game            # default: 10 trainers
+./game 20         # optional: number of trainers (capped at 30)
 ```
 
-Requires a C++ compiler and `ncurses` (`libncurses-dev` on Debian/Ubuntu, preinstalled on the ISU Pyrite server).
+Requires a C++ compiler and `libncurses-dev` (or equivalent on your platform).
 
-## Running
+### Pokédex data
 
-The game looks for the Pokédex CSV database in this order:
-
-1. `/share/cs327/pokedex/pokedex/data/csv/` (Pyrite / grading environment)
-2. `$HOME/.poke327/pokedex/data/csv/`
-3. *(optional third location — see source)*
-
-If none contain the database, the program exits with an error.
-
-**The database is not included in this repository** — see the "Database" section below.
-
-### Controls
-
-| Key | Action |
-|-----|--------|
-| `7 y` `8 k` `9 u` `6 l` `3 n` `2 j` `1 b` `4 h` | Move one cell (8 directions) |
-| `5` `space` `.` | Rest one turn |
-| `>` | Enter Pokémart / Pokémon Center (when standing on one) |
-| `<` | Exit building |
-| `t` | List trainers (arrow keys scroll, `esc` returns) |
-| `f x y` | Fly to map coordinates `(x, y)` |
-| `Q` | Quit |
-
-## Database
-
-The Pokédex CSV data lives on the CS department's Pyrite server at `/share/cs327/pokedex/`. To fetch a local copy:
+The game looks for the Pokédex CSVs in a few standard locations at startup. If you need a local copy, grab it from the [veekun/pokedex](https://github.com/veekun/pokedex) repo:
 
 ```bash
 mkdir -p ~/.poke327
-scp -r <netid>@pyrite.cs.iastate.edu:/share/cs327/pokedex ~/.poke327/
+git clone https://github.com/veekun/pokedex ~/.poke327/pokedex
 ```
 
-Per course policy, the database is **not** committed to this repository.
+## Controls
+
+| Key | Action |
+|-----|--------|
+| `7 y` `8 k` `9 u` `6 l` `3 n` `2 j` `1 b` `4 h` | Move one cell (8 directions — vi keys or numpad) |
+| `5` `space` `.` | Rest one turn |
+| `>` | Enter Pokémart or Pokémon Center |
+| `f` | Fly to map coordinates |
+| `t` | List nearby trainers (scroll with arrows, `esc` closes) |
+| `B` | Open bag |
+| `q` | Quit |
 
 ## Project layout
