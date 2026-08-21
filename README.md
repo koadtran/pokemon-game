@@ -1,4 +1,4 @@
-# poke327
+# Pokemon game
 
 A terminal-based Pokémon-inspired roguelike, built incrementally over the semester for **COM S 327 (Advanced Programming Techniques)** at Iowa State University, Spring 2026.
 
