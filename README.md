@@ -43,3 +43,27 @@ The Pokédex CSVs ship with the repo under `src/files_to_parse/`, so no extra se
 | `q` | Quit |
 
 ## Project layout
+
+src/
+├── game.cpp            # main loop, ncurses setup
+├── world.cpp           # world state, input handling
+├── world.h
+├── map.cpp             # terrain generation
+├── map.h
+├── characters.cpp      # PC, NPCs, movement AI, encounters
+├── characters.h
+├── distance.cpp        # Dijkstra pathfinding
+├── distance.h
+├── data.cpp            # Pokédex CSV parsing
+├── data.h
+├── files_to_parse/     # Pokédex CSV database
+└── Makefile
+
+
+## Credits
+
+The Pokédex CSV data under `src/files_to_parse/` comes from the [veekun/pokedex](https://github.com/veekun/pokedex) project, an open-source community Pokédex. Used here under its MIT license.
+
+## Author
+
+Khoa Dang Tran
